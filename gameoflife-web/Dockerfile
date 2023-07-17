@@ -1,8 +1,11 @@
-FROM tomcat:8-jre8
+FROM openjdk:8u151-jdk-alpine3.7
 
-RUN rm -rf /usr/local/tomcat/webapps/*
+EXPOSE 8070
 
-COPY target/gameoflife.war /usr/local/tomcat/webapps/ROOT.war
+ENV APP_HOME /usr/src/app
 
-EXPOSE 8080
-CMD ["catalina.sh", "run"]
+COPY target/gameoflife.war $APP_HOME gameoflife.war
+
+WORKDIR $APP_HOME
+
+ENTRYPOINT exec java -jar gameoflife.war

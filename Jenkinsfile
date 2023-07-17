@@ -37,7 +37,7 @@ pipeline {
 		    steps{
                     withCredentials([usernamePassword(credentialsId: "dockerHub", passwordVariable:"dockerHubPass", usernameVariable:"dockerHubUser")]){
                         sh "docker tag gameoflife ${env.dockerHubUser}/gameoflife:latest"
-                        sh "docker login -u ${env.dockerUser} -p ${env.dockerHubPass}"
+                        sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
                         sh "docker push rishi0921/gameoflife:latest"
 		    }    
                 }  

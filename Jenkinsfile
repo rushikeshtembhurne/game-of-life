@@ -49,7 +49,7 @@ pipeline {
 			   sh 'docker run -d --name game -p 8070:8070 rishi0921/gameoflife:latest'
 			}  
 		    }
-		}
+		
 		
    }
 

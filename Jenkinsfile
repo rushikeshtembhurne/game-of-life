@@ -19,6 +19,7 @@ pipeline {
 		    sh 'mvn clean package'  
 		    }
 		}
+
 		stage('Archiving the Test Results'){
 		     steps{
 			 junit '**/surefire-reports/*.xml'
@@ -29,7 +30,7 @@ pipeline {
 		stage('Build Docker Image'){
 		    steps{
 		       script {
-			   withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker') {
+			   withDockerRegistry(credentialsId: 'b6769272-7fdc-461d-8121-981db7d9674e', toolName: 'docker') {
 					sh 'docker build -t gameoflife -f Dockerfile .'
 					sh 'docker tag gameoflife rishi0921/gameoflife:latest'
 				}
@@ -39,7 +40,7 @@ pipeline {
 		stage('Push Docker Image'){
 		    steps{
 		       script {
-			   withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker') {
+			   withDockerRegistry(credentialsId: 'b6769272-7fdc-461d-8121-981db7d9674e', toolName: 'docker') {
 					sh 'docker push rishi0921/gameoflife:latest'
 				}
 			   }  
@@ -48,7 +49,7 @@ pipeline {
         stage('Deploy To Docker Container'){
 		    steps{
 		       script {
-			   withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker') {
+			   withDockerRegistry(credentialsId: 'b6769272-7fdc-461d-8121-981db7d9674e', toolName: 'docker') {
 					sh 'docker run -d --name game -p 8070:8070 rishi0921/gameoflife:latest'
 				}
 			   }  

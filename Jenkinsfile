@@ -35,11 +35,11 @@ pipeline {
 
 		stage('Push Docker Image'){
 		    steps{
-                    withCredentials([usernamePassword(credentialsId:'docker',usernameVariable:'dockerUser',passwordVariable:'dockerPass')]){
+                    withCredentials([usernamePassword(credentialsId:'docker',usernameVariable:'dockerUser',passwordVariable:'dockerPass')])
                         sh 'docker tag gameoflife ${env.dockerUser}/gameoflife:latest'
                         sh 'docker login -u ${env.dockerUser} -p ${env.dockerPass}'
                         sh 'docker push rishi0921/gameoflife:latest'
-                    }      
+                          
                 }  
 		    }
 

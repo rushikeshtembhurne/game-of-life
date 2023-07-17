@@ -29,7 +29,7 @@ pipeline {
 		}
 		stage('Build Docker Image'){
 		    steps{   
-			 sh 'docker build -t gameoflife gameoflife-web/Dockerfile .'
+			 sh 'docker build -t gameoflife -f gameoflife-web/Dockerfile .'
 			 }
 		}
 

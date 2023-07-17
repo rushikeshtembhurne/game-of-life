@@ -28,24 +28,22 @@ pipeline {
 			 
 		}
 		stage('Build Docker Image'){
-		    steps{
-		       script {
-			   withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-					sh 'docker build -t gameoflife -f Dockerfile .'
-					sh 'docker tag gameoflife rishi0921/gameoflife:latest'
-				}
-			   }  
-		    }
+		    steps{   
+			 sh 'docker build -t gameoflife .'
+			 }
 		}
+
 		stage('Push Docker Image'){
 		    steps{
-		       script {
-			   withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-					sh 'docker push rishi0921/gameoflife:latest'
-				}
-			   }  
+                    withCredentials([usernamePassword(credentialsId:'docker',usernameVariable:'dockerUser',passwordVariable:'dockerPass')]){
+                        sh 'docker tag gameoflife ${env.dockerUser}/gameoflife:latest'
+                        sh 'docker login -u ${env.dockerUser} -p ${env.dockerPass}'
+                        sh 'docker push rishi0921/gameoflife:latest'
+                    }      
+                }  
 		    }
-		}
+
+
         stage('Deploy To Docker Container'){
 		    steps{
 		       script {
@@ -57,6 +55,6 @@ pipeline {
 		}
 		
    }
-}
 
+}
 

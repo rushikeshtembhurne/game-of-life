@@ -46,11 +46,8 @@ pipeline {
 
         stage('Deploy To Docker Container'){
 		    steps{
-		       script {
-			   withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
-					sh 'docker run -d --name game -p 8070:8070 rishi0921/gameoflife:latest'
-				}
-			   }  
+			   sh 'docker run -d --name game -p 8070:8070 rishi0921/gameoflife:latest'
+			}  
 		    }
 		}
 		
